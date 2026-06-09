@@ -2,6 +2,7 @@ import { Form, message } from 'antd'
 import { ClaimRequestHeader } from './components/ClaimRequestHeader'
 import { InsuredPersonSection } from './components/InsuredPersonSection'
 import { AccidentMedicalSection } from './components/AccidentMedicalSection'
+import { PaymentInfoSection } from './components/PaymentInfoSection'
 import { INSURED_PERSON_DEFAULTS } from './mock-claim-request'
 import { DEFAULT_TREATMENT_TYPE, type ClaimRequestFormValues } from './claim-request-form-helpers'
 
@@ -42,6 +43,7 @@ export function ClaimRequestPage() {
           <div className="flex flex-col gap-5">
             <InsuredPersonSection />
             <AccidentMedicalSection />
+            <PaymentInfoSection />
           </div>
         </Form>
       </div>
