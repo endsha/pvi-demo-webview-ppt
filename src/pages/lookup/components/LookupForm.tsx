@@ -1,4 +1,5 @@
 import { Button, Form, Input, Select } from 'antd'
+import { useNavigate } from '@tanstack/react-router'
 import {
   DEFAULT_INSURANCE_TYPE,
   INSURANCE_TYPE_OPTIONS,
@@ -8,10 +9,12 @@ import {
 
 export function LookupForm() {
   const [form] = Form.useForm<LookupFormValues>()
+  const navigate = useNavigate()
 
   const handleFinish = (values: LookupFormValues) => {
-    // UI-only: no API. Log the selected values (the approved "no-op" behavior).
+    // UI-only: no API. Persisted lookup happens on the General Info page.
     console.info('Tra cứu:', values)
+    navigate({ to: '/general-info' })
   }
 
   return (
