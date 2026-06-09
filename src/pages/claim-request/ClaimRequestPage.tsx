@@ -1,5 +1,6 @@
 import { Form, message } from 'antd'
 import { ClaimRequestHeader } from './components/ClaimRequestHeader'
+import { InsuredPersonSection } from './components/InsuredPersonSection'
 import { INSURED_PERSON_DEFAULTS } from './mock-claim-request'
 import { DEFAULT_TREATMENT_TYPE, type ClaimRequestFormValues } from './claim-request-form-helpers'
 
@@ -37,7 +38,9 @@ export function ClaimRequestPage() {
           )}
           onFinish={handleFinish}
         >
-          <div className="flex flex-col gap-5">{/* sections added in Tasks 3-7 */}</div>
+          <div className="flex flex-col gap-5">
+            <InsuredPersonSection />
+          </div>
         </Form>
       </div>
     </main>
