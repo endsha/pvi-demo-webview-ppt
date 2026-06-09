@@ -3,6 +3,7 @@ import { GeneralInfoHeader } from './components/GeneralInfoHeader'
 import { InfoTabs, type InfoTabKey } from './components/InfoTabs'
 import { ClaimsPlaceholder } from './components/ClaimsPlaceholder'
 import { PolicyInfoSection } from './components/PolicyInfoSection'
+import { BenefitsSection } from './components/BenefitsSection'
 
 export function GeneralInfoPage() {
   const [activeTab, setActiveTab] = useState<InfoTabKey>('general')
@@ -15,6 +16,7 @@ export function GeneralInfoPage() {
         {activeTab === 'general' ? (
           <div className="flex flex-col gap-6">
             <PolicyInfoSection />
+            <BenefitsSection />
           </div>
         ) : (
           <ClaimsPlaceholder />
