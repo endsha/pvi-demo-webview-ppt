@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Button, Input, Pagination } from 'antd'
 import { ArrowRightOutlined } from '@ant-design/icons'
+import { useNavigate } from '@tanstack/react-router'
 import { ClaimsTable } from './ClaimsTable'
 import { ClaimStatusFilter } from './ClaimStatusFilter'
 import { MOCK_CLAIM_REQUESTS } from '../mock-claims'
@@ -13,6 +14,7 @@ import {
 import { paginate } from '../general-info-helpers'
 
 export function ClaimsSection() {
+  const navigate = useNavigate()
   const [statusFilter, setStatusFilter] = useState<ClaimStatusFilterValue>('all')
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
@@ -44,7 +46,12 @@ export function ClaimsSection() {
             }}
           />
           <ClaimStatusFilter value={statusFilter} onChange={handleStatus} />
-          <Button type="primary" iconPosition="end" icon={<ArrowRightOutlined />}>
+          <Button
+            type="primary"
+            iconPosition="end"
+            icon={<ArrowRightOutlined />}
+            onClick={() => navigate({ to: '/claim-request' })}
+          >
             Gửi yêu cầu bồi thường
           </Button>
         </div>
