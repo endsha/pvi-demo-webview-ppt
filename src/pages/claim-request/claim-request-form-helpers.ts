@@ -29,6 +29,7 @@ export interface ClaimRequestFormValues {
   treatmentFrom?: Dayjs
   treatmentTo?: Dayjs
   // Payment
+  // AntD InputNumber + parseVndInput stores a digit-string at runtime; coerce when wiring a real API.
   requestedAmount?: number
   paymentCases: PaymentCase[]
   beneficiaryName: string
