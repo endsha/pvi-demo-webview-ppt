@@ -6,11 +6,8 @@ import { PaymentInfoSection } from './components/PaymentInfoSection'
 import { AttachmentsListSection } from './components/AttachmentsListSection'
 import { BackToTopButton } from '@/components/ui/BackToTopButton'
 import { MOCK_CLAIM_DETAIL } from './mock-claim-request-detail'
-import type { ClaimRequestFormValues } from './claim-request-form-helpers'
 
 export function ClaimRequestDetailPage() {
-  const [form] = Form.useForm<ClaimRequestFormValues>()
-
   return (
     <main className="flex-1 bg-form-band">
       <ClaimRequestHeader
@@ -19,7 +16,6 @@ export function ClaimRequestDetailPage() {
       />
       <div className="mx-auto w-full max-w-3xl px-4 pb-12">
         <Form
-          form={form}
           layout="vertical"
           disabled
           initialValues={MOCK_CLAIM_DETAIL}
