@@ -3,10 +3,11 @@ import { QueryClient } from '@tanstack/react-query'
 import { rootRoute } from './routes/root-layout'
 import { lookupRoute } from './routes/lookup-route'
 import { generalInfoRoute } from './routes/general-info-route'
+import { claimRequestRoute } from './routes/claim-request-route'
 
 export const queryClient = new QueryClient()
 
-const routeTree = rootRoute.addChildren([lookupRoute, generalInfoRoute])
+const routeTree = rootRoute.addChildren([lookupRoute, generalInfoRoute, claimRequestRoute])
 
 export const router = createRouter({
   routeTree,
