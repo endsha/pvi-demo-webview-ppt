@@ -4,6 +4,7 @@ import { InsuredPersonSection } from './components/InsuredPersonSection'
 import { AccidentMedicalSection } from './components/AccidentMedicalSection'
 import { PaymentInfoSection } from './components/PaymentInfoSection'
 import { AttachmentsSection } from './components/AttachmentsSection'
+import { CommitmentSection } from './components/CommitmentSection'
 import { INSURED_PERSON_DEFAULTS } from './mock-claim-request'
 import { DEFAULT_TREATMENT_TYPE, type ClaimRequestFormValues } from './claim-request-form-helpers'
 
@@ -46,6 +47,7 @@ export function ClaimRequestPage() {
             <AccidentMedicalSection />
             <PaymentInfoSection />
             <AttachmentsSection />
+            <CommitmentSection />
           </div>
         </Form>
       </div>
