@@ -8,7 +8,7 @@ import {
   filterClaimsByStatus,
   searchClaims,
   CLAIMS_PAGE_SIZE,
-  type ClaimStatusFilter as ClaimStatusFilterValue,
+  type ClaimStatusFilterValue,
 } from '../claims-helpers'
 import { paginate } from '../general-info-helpers'
 

@@ -3,7 +3,7 @@ import type { MenuProps } from 'antd'
 import { CheckOutlined, FilterOutlined } from '@ant-design/icons'
 import {
   CLAIM_STATUS_FILTER_OPTIONS,
-  type ClaimStatusFilter as ClaimStatusFilterValue,
+  type ClaimStatusFilterValue,
 } from '../claims-helpers'
 
 interface ClaimStatusFilterProps {

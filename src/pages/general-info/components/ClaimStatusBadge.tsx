@@ -1,4 +1,3 @@
-import type { ComponentType } from 'react'
 import {
   CheckCircleFilled,
   CloseCircleFilled,
@@ -8,7 +7,7 @@ import {
 import { CLAIM_STATUS_META, type ClaimStatus } from '../claims-helpers'
 import { cn } from '@/utils/cn'
 
-const STATUS_ICON: Record<ClaimStatus, ComponentType> = {
+const STATUS_ICON: Record<ClaimStatus, typeof LoadingOutlined> = {
   processing: LoadingOutlined,
   rejected: CloseCircleFilled,
   paid: CheckCircleFilled,

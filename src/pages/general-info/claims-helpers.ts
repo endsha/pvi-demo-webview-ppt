@@ -1,5 +1,5 @@
 export type ClaimStatus = 'processing' | 'rejected' | 'paid' | 'closed'
-export type ClaimStatusFilter = 'all' | ClaimStatus
+export type ClaimStatusFilterValue = 'all' | ClaimStatus
 
 export interface ClaimRequest {
   id: string
@@ -25,7 +25,7 @@ export const CLAIM_STATUS_META: Record<ClaimStatus, ClaimStatusMeta> = {
   closed: { label: 'Đóng', colorClass: 'text-gray-500' },
 }
 
-export const CLAIM_STATUS_FILTER_OPTIONS: { value: ClaimStatusFilter; label: string }[] = [
+export const CLAIM_STATUS_FILTER_OPTIONS: { value: ClaimStatusFilterValue; label: string }[] = [
   { value: 'all', label: 'Tất cả' },
   { value: 'rejected', label: 'Từ chối' },
   { value: 'paid', label: 'Đã chi trả' },
@@ -35,7 +35,7 @@ export const CLAIM_STATUS_FILTER_OPTIONS: { value: ClaimStatusFilter; label: str
 
 export function filterClaimsByStatus(
   claims: readonly ClaimRequest[],
-  filter: ClaimStatusFilter,
+  filter: ClaimStatusFilterValue,
 ): ClaimRequest[] {
   if (filter === 'all') return [...claims]
   return claims.filter((c) => c.status === filter)
