@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Button, Collapse, DatePicker, Select } from 'antd'
 import dayjs, { type Dayjs } from 'dayjs'
 import { MOCK_POLICY_INFO, DEFAULT_LOOKUP_DATE } from '../mock-data'
@@ -6,7 +6,7 @@ import { formatDate, formatVnd } from '../general-info-helpers'
 
 interface InfoRowProps {
   label: string
-  children: React.ReactNode
+  children: ReactNode
 }
 
 function InfoRow({ label, children }: InfoRowProps) {

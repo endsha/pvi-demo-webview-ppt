@@ -46,7 +46,7 @@ export const MOCK_BENEFITS: Benefit[] = [
     title: 'Chi phí y tế do tai nạn',
     maxLimit: 120000,
     vehicle: 'all',
-    description: 'Chi chi trả các chi phí y tế phát sinh trong thời hạn bảo hiểm',
+    description: 'Chỉ chi trả các chi phí y tế phát sinh trong thời hạn bảo hiểm',
     detail: { accumulatedLimit: 120000, paidAmount: 0, estimatedClaim: 0 },
   },
 ]

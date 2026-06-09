@@ -14,13 +14,15 @@ const TABS: { key: InfoTabKey; label: string }[] = [
 
 export function InfoTabs({ active, onChange }: InfoTabsProps) {
   return (
-    <div className="flex w-full border-b border-gray-200 bg-white">
+    <div role="tablist" className="flex w-full border-b border-gray-200 bg-white">
       {TABS.map((tab) => {
         const isActive = tab.key === active
         return (
           <button
             key={tab.key}
             type="button"
+            role="tab"
+            aria-selected={isActive}
             onClick={() => onChange(tab.key)}
             className={cn(
               'flex-1 border-b-2 px-4 py-3 text-center text-sm font-semibold transition-colors',
