@@ -14,10 +14,10 @@ export interface ClaimRequestFormValues {
   fullName: string
   gender: string
   idNumber?: string
-  birthDate?: string
+  birthDate?: string // free-text input in the design (not a date picker)
   email: string
   zaloPhone: string
-  // Accident & medical
+  // Accident & medical — date fields are AntD DatePicker values (Dayjs)
   accidentDate?: Dayjs
   accidentPlace: string
   examDate?: Dayjs
@@ -81,7 +81,7 @@ export function areAllCommitmentsAccepted(
   return COMMITMENT_FIELDS.every((field) => values[field] === true)
 }
 
-export function formatVndInput(value: string | number | undefined): string {
+export function formatVndInput(value: string | number | null | undefined): string {
   if (value === undefined || value === null || value === '') return ''
   return `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }

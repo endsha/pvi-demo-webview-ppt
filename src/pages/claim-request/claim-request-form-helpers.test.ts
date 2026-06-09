@@ -7,6 +7,7 @@ import {
   COMMITMENT_STATEMENTS,
   PAYMENT_CASE_OPTIONS,
   TREATMENT_TYPE_OPTIONS,
+  DEFAULT_TREATMENT_TYPE,
 } from './claim-request-form-helpers'
 
 describe('areAllCommitmentsAccepted', () => {
@@ -69,5 +70,8 @@ describe('option/constant lists', () => {
   })
   test('treatment types are Ngoại trú then Nội trú', () => {
     expect(TREATMENT_TYPE_OPTIONS.map((o) => o.label)).toEqual(['Ngoại trú', 'Nội trú'])
+  })
+  test('default treatment type is outpatient', () => {
+    expect(DEFAULT_TREATMENT_TYPE).toBe('outpatient')
   })
 })
