@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { Form, message } from 'antd'
 import { ClaimRequestHeader } from './components/ClaimRequestHeader'
+import { ClaimRequestSuccess } from './components/ClaimRequestSuccess'
 import { InsuredPersonSection } from './components/InsuredPersonSection'
 import { AccidentMedicalSection } from './components/AccidentMedicalSection'
 import { PaymentInfoSection } from './components/PaymentInfoSection'
@@ -11,11 +13,22 @@ import { DEFAULT_TREATMENT_TYPE, type ClaimRequestFormValues } from './claim-req
 export function ClaimRequestPage() {
   const [form] = Form.useForm<ClaimRequestFormValues>()
   const [messageApi, contextHolder] = message.useMessage()
+  const [submitted, setSubmitted] = useState(false)
 
   const handleFinish = (values: ClaimRequestFormValues) => {
     // UI-only: no API.
     console.info('Yêu cầu bồi thường:', values)
-    messageApi.success('Đã nộp hồ sơ yêu cầu bồi thường (demo).')
+    messageApi.success('Cập nhật thông tin thành công')
+    setSubmitted(true)
+  }
+
+  if (submitted) {
+    return (
+      <main className="flex-1 bg-form-band">
+        {contextHolder}
+        <ClaimRequestSuccess />
+      </main>
+    )
   }
 
   return (
