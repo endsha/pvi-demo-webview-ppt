@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { GeneralInfoHeader } from './components/GeneralInfoHeader'
 import { InfoTabs, type InfoTabKey } from './components/InfoTabs'
 import { ClaimsPlaceholder } from './components/ClaimsPlaceholder'
+import { PolicyInfoSection } from './components/PolicyInfoSection'
 
 export function GeneralInfoPage() {
   const [activeTab, setActiveTab] = useState<InfoTabKey>('general')
@@ -12,7 +13,9 @@ export function GeneralInfoPage() {
       <InfoTabs active={activeTab} onChange={setActiveTab} />
       <div className="mx-auto w-full max-w-3xl px-4 py-6">
         {activeTab === 'general' ? (
-          <div className="text-center text-gray-400">Sections coming in next tasks</div>
+          <div className="flex flex-col gap-6">
+            <PolicyInfoSection />
+          </div>
         ) : (
           <ClaimsPlaceholder />
         )}
