@@ -1,0 +1,167 @@
+# Routing — TanStack Router
+
+<!-- last-reviewed: 2026-05-10 -->
+
+## Scope
+Route tree shape, loaders, search params, auth guards, pending/error UI. TanStack Router
+in code-based mode. Excludes data fetching mechanics — see `data-fetching.md`.
+
+## Stack assumptions
+`@tanstack/react-router` 1+, code-based route tree (no file-based routing), Zod for
+search-param schemas, single `QueryClient` from `data-fetching.md`.
+
+## Rules
+
+### 1. Code-based route tree in `src/router/`
+- One file per top-level route. Children compose via `getParentRoute`.
+
+```
+src/router/
+  router.ts            # createRouter + rootRoute
+  routes/
+    auth-route.ts      # parent for protected pages
+    users-route.ts
+    user-detail-route.ts
+    settings-route.ts
+```
+
+```ts
+// src/router/routes/users-route.ts
+export const usersRoute = createRoute({
+  getParentRoute: () => authRoute,
+  path: '/users',
+  component: UsersPage,
+});
+```
+
+### 2. Loaders preload via `queryClient.ensureQueryData` — never raw `fetch`
+- The route loader hits the same TanStack Query cache the components will read from.
+- Components still call `useXxxQuery` and get a warm cache.
+
+```ts
+export const userDetailRoute = createRoute({
+  getParentRoute: () => authRoute,
+  path: '/users/$userId',
+  loader: ({ params, context }) =>
+    context.queryClient.ensureQueryData({
+      queryKey: userKeys.detail(params.userId),
+      queryFn: () => api.getUser(params.userId),
+    }),
+  component: UserDetailPage,
+});
+```
+
+- ❌ Do not call `fetch` or `axios` directly from a loader.
+- ❌ Do not duplicate fetching logic in a loader and a component.
+
+### 3. Search params validated by a Zod schema on `validateSearch`
+- All filters, pagination, and selected ids live in search params — never in `useState`
+  or Zustand.
+
+```ts
+const usersSearchSchema = z.object({
+  page: z.number().int().min(1).default(1),
+  q: z.string().optional(),
+  role: z.enum(['admin', 'member']).optional(),
+});
+
+export const usersRoute = createRoute({
+  getParentRoute: () => authRoute,
+  path: '/users',
+  validateSearch: usersSearchSchema,
+  component: UsersPage,
+});
+```
+
+- Read in components via `usersRoute.useSearch()` — fully typed, no manual parsing.
+- Update via `navigate({ search: (prev) => ({ ...prev, page: 2 }) })`.
+
+### 4. Auth guard on the protected parent — never per-leaf
+- One `authRoute` parent runs `beforeLoad`. Every protected page is its child. Do not
+  copy guard logic into individual routes.
+
+```ts
+export const authRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  id: 'auth',
+  beforeLoad: ({ context, location }) => {
+    if (!context.auth.user) {
+      throw redirect({ to: '/login', search: { redirect: location.href } });
+    }
+  },
+});
+```
+
+### 5. Pending and error UI live on the route, not in the page
+- Use `pendingComponent` and `errorComponent` per route. Pages render the happy path only.
+
+```ts
+export const userDetailRoute = createRoute({
+  // ...
+  pendingComponent: PageSkeleton,
+  errorComponent: ({ error, reset }) => <PageError error={error} onRetry={reset} />,
+});
+```
+
+- Inline error rendering inside a page is reserved for recoverable, field-scoped errors
+  (see `data-fetching.md` rule 7).
+
+### 6. URL is the only "what is the user looking at" state
+- Filters, current page, selected row, open detail panel id → search params.
+- If two users paste the same URL, they should see the same view. If a refresh loses the
+  state, it does not belong here.
+- ❌ Do not store the current page or selected id in Zustand.
+
+### 7. Navigation by route reference, not string concatenation
+- Use the typed `navigate` / `<Link>` API. The route object is the contract.
+
+```tsx
+// ✅ Good
+<Link to={userDetailRoute.to} params={{ userId }}>View</Link>
+navigate({ to: usersRoute.to, search: { page: 1 } });
+
+// ❌ Avoid
+<Link to={`/users/${userId}`}>View</Link>
+navigate({ to: '/users?page=1' });
+```
+
+### 8. Route context carries cross-cutting deps
+- `createRouter({ context: { queryClient, auth } })`. Loaders and `beforeLoad` read from
+  context — they do not import the QueryClient or auth store directly.
+
+### 9. Code-splitting by default
+- Every route component is lazy-loaded. Use TanStack Router's `lazyRouteComponent`
+  helper — it integrates with the route's `pendingComponent`. Do not use React's
+  `lazy()` for routes (it requires a separate `<Suspense>` boundary and bypasses the
+  router's pending state).
+- See `performance.md` for budgets.
+
+```ts
+import { lazyRouteComponent } from '@tanstack/react-router';
+
+export const usersRoute = createRoute({
+  getParentRoute: () => authRoute,
+  path: '/users',
+  component: lazyRouteComponent(() => import('@/pages/UsersPage')),
+  pendingComponent: PageSkeleton,
+});
+```
+
+### 10. Layouts via parent routes
+- Shared chrome (sidebar, header) is the `component` of a parent route. Children render
+  inside `<Outlet />`. Do not wrap pages in layouts manually.
+
+## Anti-patterns
+- File-based routing (`routes/` autogenerated). Stick with code-based for explicitness.
+- Calling `fetch` / `axios` in a loader.
+- `useState` or Zustand for filters, pagination, or selected id.
+- `useNavigate()` to pass data via state instead of search params.
+- `useParams()` typed as `Record<string, string>` — use the route's typed `useParams()`.
+- Per-leaf auth checks duplicated across routes.
+- Nesting React Router `<Routes>` anywhere.
+- `<Link to="/users/123">` string paths instead of typed route refs.
+
+## Cross-refs
+- Loader-driven cache warming: `data-fetching.md`.
+- Auth user source: `state-management.md` (`useAuthStore`).
+- Route-level chunking budgets: `performance.md`.
