@@ -7,20 +7,24 @@ export function PaymentInfoSection() {
     <SectionCard title="Thông tin thanh toán">
       <h3 className="mb-4 font-semibold text-pvi-navy">1. Nội dung yêu cầu chi trả bảo hiểm</h3>
 
-      <Form.Item
-        label="Tổng số tiền yêu cầu chi trả"
-        name="requestedAmount"
-        rules={[{ required: true, message: 'Vui lòng nhập số tiền yêu cầu chi trả' }]}
-      >
-        <InputNumber
-          className="w-full"
-          controls={false}
-          formatter={formatVndInput}
-          parser={parseVndInput}
-          suffix={<span className="text-gray-400">VND</span>}
-          placeholder="Nhập số tiền yêu cầu chi trả"
-        />
-      </Form.Item>
+      <Row gutter={[24, 0]}>
+        <Col xs={24} md={12}>
+          <Form.Item
+            label="Tổng số tiền yêu cầu chi trả"
+            name="requestedAmount"
+            rules={[{ required: true, message: 'Vui lòng nhập số tiền yêu cầu chi trả' }]}
+          >
+            <InputNumber
+              style={{ width: '100%' }}
+              controls={false}
+              formatter={formatVndInput}
+              parser={parseVndInput}
+              suffix={<span className="text-gray-400">VND</span>}
+              placeholder="Nhập số tiền yêu cầu chi trả"
+            />
+          </Form.Item>
+        </Col>
+      </Row>
 
       <Form.Item
         label="Chi trả cho những trường hợp"
