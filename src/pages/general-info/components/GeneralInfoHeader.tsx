@@ -5,7 +5,7 @@ export function GeneralInfoHeader() {
   const navigate = useNavigate()
 
   return (
-    <div className="relative px-10 py-6 text-center">
+    <div className="relative px-10 py-6 text-center bg-white">
       <button
         type="button"
         aria-label="Quay lại"
