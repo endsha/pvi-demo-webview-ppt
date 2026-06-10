@@ -54,7 +54,10 @@ const createColumns = (onSelect: (claim: ClaimRequest) => void): ColumnsType<Cla
 export function ClaimsTable({ claims }: ClaimsTableProps) {
   const navigate = useNavigate()
   const columns = useMemo(
-    () => createColumns(() => navigate({ to: '/claim-request-detail' })),
+    () =>
+      createColumns((claim) =>
+        navigate({ to: '/claim-request-detail', search: { id: claim.id } }),
+      ),
     [navigate],
   )
 
