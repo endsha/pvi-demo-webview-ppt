@@ -3,7 +3,8 @@ import { useNavigate } from '@tanstack/react-router'
 import {
   DEFAULT_INSURANCE_TYPE,
   INSURANCE_TYPE_OPTIONS,
-  MOCK_PHONE,
+  REGISTERED_PHONE_DISPLAY,
+  isRegisteredPhone,
   type LookupFormValues,
 } from '../lookup-form-helpers'
 
@@ -23,11 +24,25 @@ export function LookupForm() {
         <Form
           form={form}
           layout="vertical"
-          initialValues={{ phone: MOCK_PHONE, insuranceType: DEFAULT_INSURANCE_TYPE }}
+          initialValues={{ phone: '', insuranceType: DEFAULT_INSURANCE_TYPE }}
           onFinish={handleFinish}
         >
-          <Form.Item label="Số điện thoại" name="phone">
-            <Input readOnly classNames={{ input: 'text-gray-400' }} />
+          <Form.Item
+            label="Số điện thoại"
+            name="phone"
+            validateTrigger="onSubmit"
+            extra={`Số đăng ký mẫu: ${REGISTERED_PHONE_DISPLAY}`}
+            rules={[
+              { required: true, message: 'Vui lòng nhập số điện thoại' },
+              {
+                validator: (_, value: string) =>
+                  !value || isRegisteredPhone(value)
+                    ? Promise.resolve()
+                    : Promise.reject(new Error('Số điện thoại không tồn tại trong hệ thống')),
+              },
+            ]}
+          >
+            <Input inputMode="tel" placeholder="Nhập số điện thoại" allowClear />
           </Form.Item>
 
           <Form.Item label="Loại bảo hiểm" name="insuranceType">
