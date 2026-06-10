@@ -1,9 +1,12 @@
-import { createRoute } from '@tanstack/react-router'
+import { createRoute, lazyRouteComponent } from '@tanstack/react-router'
 import { rootRoute } from './root-layout'
-import { GeneralInfoPage } from '@/pages/general-info/GeneralInfoPage'
 
+// Lazy-loaded: split out of the initial bundle.
 export const generalInfoRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/general-info',
-  component: GeneralInfoPage,
+  component: lazyRouteComponent(
+    () => import('@/pages/general-info/GeneralInfoPage'),
+    'GeneralInfoPage',
+  ),
 })

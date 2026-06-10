@@ -1,9 +1,12 @@
-import { createRoute } from '@tanstack/react-router'
+import { createRoute, lazyRouteComponent } from '@tanstack/react-router'
 import { rootRoute } from './root-layout'
-import { ClaimRequestPage } from '@/pages/claim-request/ClaimRequestPage'
 
+// Lazy-loaded: heavy antd form, split out of the initial bundle.
 export const claimRequestRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/claim-request',
-  component: ClaimRequestPage,
+  component: lazyRouteComponent(
+    () => import('@/pages/claim-request/ClaimRequestPage'),
+    'ClaimRequestPage',
+  ),
 })

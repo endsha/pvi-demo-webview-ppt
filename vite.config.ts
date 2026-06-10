@@ -16,4 +16,17 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
+  build: {
+    rolldownOptions: {
+      output: {
+        // Split large, stable vendors into their own long-cacheable chunks.
+        codeSplitting: {
+          groups: [
+            { name: 'antd', test: /node_modules\/(antd|@ant-design|rc-[^/]+|@rc-component)\// },
+            { name: 'react', test: /node_modules\/(react|react-dom|scheduler)\// },
+          ],
+        },
+      },
+    },
+  },
 })
