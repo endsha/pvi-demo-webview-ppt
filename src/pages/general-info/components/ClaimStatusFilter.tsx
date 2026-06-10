@@ -27,7 +27,11 @@ export function ClaimStatusFilter({ value, onChange }: ClaimStatusFilterProps) {
       trigger={['click']}
       menu={{ items, onClick: ({ key }) => onChange(key as ClaimStatusFilterValue) }}
     >
-      <Button icon={<FilterOutlined />} aria-label="Lọc theo trạng thái" />
+      <Button
+        icon={<FilterOutlined />}
+        aria-label="Lọc theo trạng thái"
+        className="aspect-square !px-0"
+      />
     </Dropdown>
   )
 }
