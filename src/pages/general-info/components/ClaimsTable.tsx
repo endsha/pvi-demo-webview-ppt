@@ -1,5 +1,7 @@
+import { useMemo } from 'react'
 import { Table } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
+import { useNavigate } from '@tanstack/react-router'
 import type { ClaimRequest } from '../claims-helpers'
 import { formatVnd, formatDate, formatDateTime } from '../general-info-helpers'
 import { ClaimStatusBadge } from './ClaimStatusBadge'
@@ -8,12 +10,16 @@ interface ClaimsTableProps {
   claims: ClaimRequest[]
 }
 
-const columns: ColumnsType<ClaimRequest> = [
+const createColumns = (onSelect: (claim: ClaimRequest) => void): ColumnsType<ClaimRequest> => [
   {
     title: 'Số yêu cầu',
     dataIndex: 'requestNo',
-    render: (requestNo: string) => (
-      <button type="button" className="font-semibold text-blue-600 hover:underline">
+    render: (requestNo: string, claim: ClaimRequest) => (
+      <button
+        type="button"
+        className="font-semibold text-blue-600 hover:underline"
+        onClick={() => onSelect(claim)}
+      >
         {requestNo}
       </button>
     ),
@@ -46,6 +52,12 @@ const columns: ColumnsType<ClaimRequest> = [
 ]
 
 export function ClaimsTable({ claims }: ClaimsTableProps) {
+  const navigate = useNavigate()
+  const columns = useMemo(
+    () => createColumns(() => navigate({ to: '/claim-request-detail' })),
+    [navigate],
+  )
+
   return (
     <Table
       rowKey="id"
