@@ -15,7 +15,7 @@ export function GeneralInfoHeader() {
         <ArrowLeftOutlined />
       </button>
       <h1 className="text-2xl font-bold text-pvi-navy md:text-3xl">
-        Bảo hiểm tích luỹ Green SM Care Plus
+        Bảo hiểm tích luỹ Grab Care Plus
       </h1>
       <p className="mt-2 text-sm text-gray-500">
         Vui lòng điền thông tin bên dưới để tra cứu thông tin

@@ -39,7 +39,7 @@ export function PolicyInfoSection() {
           children: (
             <div className="rounded-lg bg-white p-4">
               <InfoRow label="Họ và tên">{info.fullName}</InfoRow>
-              <InfoRow label="Mã Tài xế GSM">{info.driverCode}</InfoRow>
+              <InfoRow label="Mã Tài xế Grab">{info.driverCode}</InfoRow>
               <InfoRow label="Chọn Customer Partner ID">
                 <Select
                   className="w-full sm:w-80"

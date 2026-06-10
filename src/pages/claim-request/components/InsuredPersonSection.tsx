@@ -8,7 +8,7 @@ export function InsuredPersonSection() {
     <SectionCard title="Thông tin về người được bảo hiểm">
       <Row gutter={[24, 0]}>
         <Col xs={24} md={12}>
-          <Form.Item label="Mã Tài xế GSM" name="driverCode">
+          <Form.Item label="Mã Tài xế Grab" name="driverCode">
             <Input readOnly className={READONLY_INPUT} />
           </Form.Item>
         </Col>

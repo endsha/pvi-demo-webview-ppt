@@ -6,7 +6,7 @@ describe('mock policy info', () => {
   test('matches the reference screenshot values', () => {
     expect(MOCK_POLICY_INFO.fullName).toBe('Trần Việt Dũng')
     expect(MOCK_POLICY_INFO.phone).toBe('+84 389858021')
-    expect(MOCK_POLICY_INFO.contractNo).toBe('25/PC-GSM/014635')
+    expect(MOCK_POLICY_INFO.contractNo).toBe('25/PC-GRAB/014635')
     expect(MOCK_POLICY_INFO.accumulatedAmount).toBe(2000000)
   })
 })

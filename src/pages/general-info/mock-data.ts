@@ -6,7 +6,7 @@ export const MOCK_POLICY_INFO: PolicyInfo = {
   partnerId: '6062006',
   phone: '+84 389858021',
   accumulatedAmount: 2000000,
-  contractNo: '25/PC-GSM/014635',
+  contractNo: '25/PC-GRAB/014635',
 }
 
 export const DEFAULT_LOOKUP_DATE = '2025-03-06'
